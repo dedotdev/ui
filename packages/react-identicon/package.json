@@ -1,0 +1,27 @@
+{
+  "name": "@dedot/react-identicon",
+  "description": "Renders an SVG picture representing an address",
+  "author": "Tung Vu <tung@dedot.dev>",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "dependencies": {
+    "dedot": "^0.7.0",
+    "tslib": "^2.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ethereum-blockies-base64": "^1.0.2",
+    "jdenticon": "3.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "styled-components": "^6.1.1"
+  },
+  "devDependencies": {
+    "@types/react-copy-to-clipboard": "^5.0.7",
+    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18.3.18"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
