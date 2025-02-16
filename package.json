@@ -1,0 +1,12 @@
+{
+  "name": "ui",
+  "private": true,
+  "version": "0.0.0",
+  "author": "Tung Vu <tung@dedot.dev>",
+  "license": "MIT",
+  "workspaces": ["packages/*"],
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "typescript": "^5.2.2"
+  }
+}
