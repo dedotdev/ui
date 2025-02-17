@@ -2,10 +2,12 @@ import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import type { IdentityProps as Props, Props as ComponentProps } from './types.js';
 import { decodeAddress, encodeAddress, isHex, isU8a, u8aToHex } from '@dedot/utils';
-import { Empty, Ethereum, Jdenticon, Polkadot } from './icons/index.js';
-import { styled } from './styled.js';
+import { Empty, Beachball, Jdenticon, Polkadot } from './icons/index.js';
+import { styled } from 'styled-components';
 
-const Fallback = Empty;
+const DEFAULT_ICON = 'polkadot';
+
+const Fallback = Beachball;
 
 interface State {
   address: string;
@@ -15,7 +17,7 @@ interface State {
 const DEFAULT_SIZE = 64;
 const Components: Record<string, React.ComponentType<ComponentProps>> = {
   empty: Empty,
-  ethereum: Ethereum,
+  beachball: Beachball,
   jdenticon: Jdenticon,
   polkadot: Polkadot,
   substrate: Jdenticon,
@@ -56,19 +58,27 @@ class BaseIcon extends React.PureComponent<Props, State> {
     const { address } = this.state;
     const wrapped = this.getWrapped(this.state, this.props);
 
-    // @ts-ignore
     return !address ? (
       wrapped
     ) : (
+      // @ts-ignore
       <CopyToClipboard onCopy={this.onCopy} text={address}>
+        {/* @ts-ignore */}
         {wrapped}
       </CopyToClipboard>
     );
   }
 
   private getWrapped({ address, publicKey }: State, { Custom }: Props): React.ReactNode {
-    const { className = '', isAlternative, isHighlight, size = DEFAULT_SIZE, style = {} } = this.props;
-    const Component = !address ? Empty : Custom || Components['polkadot'] || Fallback;
+    const {
+      className = '',
+      isAlternative,
+      isHighlight,
+      size = DEFAULT_SIZE,
+      style = {},
+      theme = 'default',
+    } = this.props;
+    const Component = !address ? Empty : Custom || Components[theme === 'default' ? DEFAULT_ICON : theme] || Fallback;
 
     return (
       <StyledDiv className={`ui--IdentityIcon  ${className}`} key={address} style={style}>

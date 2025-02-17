@@ -1,8 +1,6 @@
 import type { Props, Circle } from '../types.js';
-
 import React, { useMemo } from 'react';
-
-import { polkadotIcon } from '../shared.js';
+import { polkadotIcon } from '../shared/index.js';
 
 function renderCircle({ cx, cy, fill, r }: Circle, key: number): React.ReactNode {
   return <circle cx={cx} cy={cy} fill={fill} key={key} r={r} />;

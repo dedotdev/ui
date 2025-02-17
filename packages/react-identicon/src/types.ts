@@ -23,7 +23,7 @@ export interface IdentityProps extends BaseProps {
   value?: string | Uint8Array | null;
 }
 
-export type IconTheme = 'beachball' | 'empty' | 'ethereum' | 'jdenticon' | 'polkadot' | 'substrate';
+export type IconTheme = 'beachball' | 'empty' | 'jdenticon' | 'polkadot' | 'substrate';
 
 export interface Circle {
   cx: number;
@@ -36,4 +36,3 @@ export interface Options {
   isAlternative?: boolean;
   size?: number;
 }
-

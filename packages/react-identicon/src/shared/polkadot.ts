@@ -1,4 +1,4 @@
-import type { Circle, Options } from './types.js';
+import type { Circle, Options } from '../types.js';
 
 import { blake2AsU8a, decodeAddress } from '@dedot/utils';
 

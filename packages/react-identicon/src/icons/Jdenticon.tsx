@@ -1,5 +1,4 @@
 import type { Props } from '../types.js';
-
 import * as jdenticon from 'jdenticon';
 import React, { useMemo } from 'react';
 

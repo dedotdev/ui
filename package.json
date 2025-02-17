@@ -5,8 +5,15 @@
   "author": "Tung Vu <tung@dedot.dev>",
   "license": "MIT",
   "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "yarn clean && npx lerna run build --no-private",
+    "clean": "npx lerna run clean",
+    "fix-esm-path": "npx tsc-esm-fix --src=packages --ext=.js"
+  },
   "devDependencies": {
     "prettier": "^3.4.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "lerna": "^7.4.2",
+    "tsc-esm-fix": "^2.20.27"
   }
 }

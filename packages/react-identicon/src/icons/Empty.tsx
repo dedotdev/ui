@@ -1,5 +1,4 @@
 import type { Props } from '../types.js';
-
 import React from 'react';
 
 function Identicon({ className = '', size, style = {} }: Props): React.ReactElement<Props> {
