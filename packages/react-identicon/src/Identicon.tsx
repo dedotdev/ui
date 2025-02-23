@@ -5,7 +5,8 @@ import { decodeAddress, encodeAddress, isHex, isU8a, u8aToHex } from '@dedot/uti
 import { Empty, Beachball, Jdenticon, Polkadot } from './icons/index.js';
 import { styled } from 'styled-components';
 
-const DEFAULT_ICON = 'polkadot';
+const DEFAULT_ICON: string = 'polkadot';
+const DEFAULT_PREFIX: number = 42;
 
 const Fallback = Beachball;
 
@@ -14,7 +15,7 @@ interface State {
   publicKey: string;
 }
 
-const DEFAULT_SIZE = 64;
+const DEFAULT_SIZE: number = 64;
 const Components: Record<string, React.ComponentType<ComponentProps>> = {
   empty: Empty,
   beachball: Beachball,
@@ -23,20 +24,17 @@ const Components: Record<string, React.ComponentType<ComponentProps>> = {
   substrate: Jdenticon,
 };
 
-type IBaseIcon<P> = React.FunctionComponent<P> & {
-  prefix?: number;
-  setDefaultPrefix?: (prefix: number) => void;
-};
+type IBaseIcon<P> = React.FunctionComponent<P>;
 
 const BaseIcon: IBaseIcon<Props> = (props) => {
   const [address, setAddress] = useState<string>('');
   const [publicKey, setPublicKey] = useState<string>('0x');
-  const { value, prefix = BaseIcon.prefix, onCopy } = props;
+  const { value, prefix = DEFAULT_PREFIX, onCopy } = props;
 
   useEffect(() => {
     try {
       const address = isU8a(value) || isHex(value) ? encodeAddress(value, prefix) : value || '';
-      const publicKey = u8aToHex(decodeAddress(address, false, prefix));
+      const publicKey = u8aToHex(decodeAddress(address, false));
 
       setAddress(address);
       setPublicKey(publicKey);
@@ -44,7 +42,7 @@ const BaseIcon: IBaseIcon<Props> = (props) => {
       setAddress('');
       setPublicKey('0x');
     }
-  }, [value, prefix]);
+  }, [value?.toString(), prefix]);
 
   const doCopy = (): void => {
     copy(address);
@@ -59,10 +57,6 @@ const BaseIcon: IBaseIcon<Props> = (props) => {
       <InnerIcon publicKey={publicKey} address={address} {...props} />
     </span>
   );
-};
-
-BaseIcon.setDefaultPrefix = (prefix: number) => {
-  BaseIcon.prefix = prefix;
 };
 
 type IInnerIcon<P> = React.FunctionComponent<P>;
