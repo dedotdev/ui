@@ -1,7 +1,7 @@
 import './App.css';
 import { Identicon } from '@dedot/react-identicon';
 
-function App() {
+export function App() {
   return (
     <>
       <h1>@dedot/identicon</h1>
