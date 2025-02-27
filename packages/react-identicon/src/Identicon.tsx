@@ -1,11 +1,12 @@
-import React from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import React, { useEffect, useState } from 'react';
+import copy from 'copy-to-clipboard';
 import type { IdentityProps as Props, Props as ComponentProps } from './types.js';
 import { decodeAddress, encodeAddress, isHex, isU8a, u8aToHex } from '@dedot/utils';
 import { Empty, Beachball, Jdenticon, Polkadot } from './icons/index.js';
 import { styled } from 'styled-components';
 
-const DEFAULT_ICON = 'polkadot';
+const DEFAULT_ICON: string = 'polkadot';
+const DEFAULT_PREFIX: number = 42;
 
 const Fallback = Beachball;
 
@@ -14,7 +15,7 @@ interface State {
   publicKey: string;
 }
 
-const DEFAULT_SIZE = 64;
+const DEFAULT_SIZE: number = 64;
 const Components: Record<string, React.ComponentType<ComponentProps>> = {
   empty: Empty,
   beachball: Beachball,
@@ -23,89 +24,68 @@ const Components: Record<string, React.ComponentType<ComponentProps>> = {
   substrate: Jdenticon,
 };
 
-class BaseIcon extends React.PureComponent<Props, State> {
-  public override state: State = {
-    address: '',
-    publicKey: '0x',
-  };
+type IBaseIcon<P> = React.FunctionComponent<P>;
 
-  private static prefix?: number = undefined;
+const BaseIcon: IBaseIcon<Props> = (props) => {
+  const [address, setAddress] = useState<string>('');
+  const [publicKey, setPublicKey] = useState<string>('0x');
+  const { value, prefix = DEFAULT_PREFIX, onCopy } = props;
 
-  public static setDefaultPrefix(prefix: number): void {
-    BaseIcon.prefix = prefix;
-  }
-
-  public static getDerivedStateFromProps({ prefix = BaseIcon.prefix, value }: Props, prevState: State): State | null {
+  useEffect(() => {
     try {
       const address = isU8a(value) || isHex(value) ? encodeAddress(value, prefix) : value || '';
-      const publicKey = u8aToHex(decodeAddress(address, false, prefix));
+      const publicKey = u8aToHex(decodeAddress(address, false));
 
-      return address === prevState.address
-        ? null
-        : {
-            address,
-            publicKey,
-          };
+      setAddress(address);
+      setPublicKey(publicKey);
     } catch {
-      return {
-        address: '',
-        publicKey: '0x',
-      };
+      setAddress('');
+      setPublicKey('0x');
     }
-  }
+  }, [value?.toString(), prefix]);
 
-  public override render(): React.ReactNode {
-    const { address } = this.state;
-    const wrapped = this.getWrapped(this.state, this.props);
-
-    return !address ? (
-      wrapped
-    ) : (
-      // @ts-ignore
-      <CopyToClipboard onCopy={this.onCopy} text={address}>
-        {/* @ts-ignore */}
-        {wrapped}
-      </CopyToClipboard>
-    );
-  }
-
-  private getWrapped({ address, publicKey }: State, { Custom }: Props): React.ReactNode {
-    const {
-      className = '',
-      isAlternative,
-      isHighlight,
-      size = DEFAULT_SIZE,
-      style = {},
-      theme = 'default',
-    } = this.props;
-    const Component = !address ? Empty : Custom || Components[theme === 'default' ? DEFAULT_ICON : theme] || Fallback;
-
-    return (
-      <StyledDiv className={`ui--IdentityIcon  ${className}`} key={address} style={style}>
-        <Component
-          address={address}
-          className={isHighlight ? 'highlight' : ''}
-          isAlternative={isAlternative}
-          publicKey={publicKey}
-          size={size}
-        />
-      </StyledDiv>
-    );
-  }
-
-  private onCopy = (): void => {
-    const { onCopy } = this.props;
-    const { address } = this.state;
+  const doCopy = (): void => {
+    copy(address);
 
     if (address && onCopy) {
       onCopy(address);
     }
   };
-}
 
-function Icon(props: Props): React.ReactElement<Props> {
-  return <BaseIcon {...props} />;
-}
+  return (
+    <span onClick={doCopy}>
+      <InnerIcon publicKey={publicKey} address={address} {...props} />
+    </span>
+  );
+};
+
+type IInnerIcon<P> = React.FunctionComponent<P>;
+
+const InnerIcon: IInnerIcon<Props & State> = ({
+  address,
+  publicKey,
+  theme,
+  Custom,
+  size,
+  className,
+  style,
+  isAlternative,
+  isHighlight,
+}) => {
+  const Component = !address ? Empty : Custom || Components[theme || DEFAULT_ICON] || Fallback;
+
+  return (
+    <StyledDiv className={`ui--IdentityIcon  ${className}`} key={address} style={style}>
+      <Component
+        address={address}
+        className={isHighlight ? 'highlight' : ''}
+        isAlternative={isAlternative}
+        publicKey={publicKey}
+        size={size || DEFAULT_SIZE}
+      />
+    </StyledDiv>
+  );
+};
 
 const StyledDiv = styled.div`
   cursor: copy;
@@ -133,4 +113,4 @@ const StyledDiv = styled.div`
   }
 `;
 
-export const Identicon = React.memo(Icon);
+export const Identicon = React.memo(BaseIcon);
