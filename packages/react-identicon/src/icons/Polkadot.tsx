@@ -1,19 +1,13 @@
-import type { Props, Circle } from '../types.js';
+import type { IconProps, PolkadotCircle } from '../types.js';
 import React, { useMemo } from 'react';
 import { polkadotIcon } from '../shared/index.js';
 
-function renderCircle({ cx, cy, fill, r }: Circle, key: number): React.ReactNode {
+function renderCircle({ cx, cy, fill, r }: PolkadotCircle, key: number): React.ReactNode {
   return <circle cx={cx} cy={cy} fill={fill} key={key} r={r} />;
 }
 
-function Identicon({
-  address,
-  className = '',
-  isAlternative = false,
-  size,
-  style = {},
-}: Props): React.ReactElement<Props> {
-  const circles = useMemo(() => polkadotIcon(address, { isAlternative }), [address, isAlternative]);
+function Identicon({ address, className = '', size, style = {} }: IconProps): React.ReactElement<IconProps> {
+  const circles = useMemo(() => polkadotIcon(address, { isAlternative: false }), [address]);
 
   return (
     <svg className={className} height={size} id={address} name={address} style={style} viewBox='0 0 64 64' width={size}>

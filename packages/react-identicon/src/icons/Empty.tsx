@@ -1,7 +1,7 @@
-import type { Props } from '../types.js';
+import type { IconProps } from '../types.js';
 import React from 'react';
 
-function Identicon({ className = '', size, style = {} }: Props): React.ReactElement<Props> {
+function Identicon({ className = '', size, style = {} }: IconProps): React.ReactElement<IconProps> {
   return <svg className={className} height={size} style={style} viewBox='0 0 64 64' width={size} />;
 }
 

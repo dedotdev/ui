@@ -1,4 +1,11 @@
-import type { Circle, Options } from '../types.js';
+// Copyright 2018-2025 @polkadot/ui-shared authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+// Copyright 2018 Paritytech via paritytech/oo7/polkadot-identicon
+// https://github.com/polkadot-js/ui/blob/master/packages/ui-shared/src/icons/polkadot.ts
+// https://github.com/paritytech/oo7/blob/251ba2b7c45503b68eab4320c270b5afa9bccb60/packages/polkadot-identicon/src/index.jsx
+
+import type { PolkadotCircle } from '../types.js';
 
 import { blake2AsU8a, decodeAddress } from '@dedot/utils';
 
@@ -23,7 +30,7 @@ const SCHEMES: readonly Scheme[] = [
 
 const SCHEMES_TOTAL = SCHEMES.map((s): number => s.freq).reduce((a, b): number => a + b);
 
-const OUTER_CIRCLE: Circle = {
+const OUTER_CIRCLE: PolkadotCircle = {
   cx: C,
   cy: C,
   fill: '#eee',
@@ -123,10 +130,15 @@ function getColors(address: string): string[] {
   return scheme.colors.map((_, i): string => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]]);
 }
 
+export interface PolkadotIconOptions {
+  isAlternative?: boolean;
+  size?: number;
+}
+
 /**
  * @description Generates an array of the circles that make up an identicon
  */
-export function polkadotIcon(address: string, { isAlternative }: Options): Circle[] {
+export function polkadotIcon(address: string, { isAlternative }: PolkadotIconOptions): PolkadotCircle[] {
   const xy = getCircleXY(isAlternative);
   let colors: string[];
 
@@ -140,7 +152,7 @@ export function polkadotIcon(address: string, { isAlternative }: Options): Circl
 
   return [OUTER_CIRCLE].concat(
     xy.map(
-      ([cx, cy], index): Circle => ({
+      ([cx, cy], index): PolkadotCircle => ({
         cx,
         cy,
         fill: colors[index],
