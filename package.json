@@ -11,12 +11,15 @@
   "scripts": {
     "build": "yarn clean && npx lerna run build --no-private",
     "clean": "npx lerna run clean",
-    "fix-esm-path": "npx tsc-esm-fix --src=packages --ext=.js"
+    "fix-esm-path": "npx tsc-esm-fix --src=packages --ext=.js",
+    "copy-files-to-dist": "npx lerna exec --no-private -- tsx \\$LERNA_ROOT_PATH/scripts/copy-files-to-dist.ts",
+    "prepublishOnly": "yarn copy-files-to-dist"
   },
   "devDependencies": {
     "lerna": "^7.4.2",
     "prettier": "^3.4.2",
     "tsc-esm-fix": "^2.20.27",
+    "tsx": "^4.19.3",
     "typescript": "^5.2.2"
   },
   "packageManager": "yarn@4.6.0"
