@@ -224,8 +224,8 @@ __metadata:
     jdenticon: "npm:3.2.0"
     styled-components: "npm:^6.1.1"
   peerDependencies:
-    react: 19
-    react-dom: 19
+    react: ^18.3.1 || 19
+    react-dom: ^18.3.1 || 19
   languageName: unknown
   linkType: soft
 
