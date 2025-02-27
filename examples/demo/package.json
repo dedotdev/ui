@@ -13,6 +13,7 @@
     "@dedot/react-identicon": "workspace:^",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "rollup-plugin-analyzer": "^4.0.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {

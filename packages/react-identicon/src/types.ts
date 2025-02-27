@@ -1,21 +1,18 @@
 import type React from 'react';
 
-export interface BaseProps {
+interface BaseProps {
   className?: string;
   style?: React.CSSProperties;
 }
 
-export interface Props extends BaseProps {
+export interface IconProps extends BaseProps {
   address: string;
-  isAlternative?: boolean | undefined;
   publicKey: string;
   size: number;
 }
 
 export interface IdentityProps extends BaseProps {
-  Custom?: React.ComponentType<Props>;
-  isAlternative?: boolean;
-  isHighlight?: boolean;
+  Custom?: React.ComponentType<IconProps>;
   onCopy?: (value: string) => void;
   prefix?: number;
   size?: number;
@@ -23,16 +20,11 @@ export interface IdentityProps extends BaseProps {
   value?: string | Uint8Array | null;
 }
 
-export type IconTheme = 'beachball' | 'empty' | 'jdenticon' | 'polkadot' | 'substrate';
+export type IconTheme = 'polkadot' | 'substrate';
 
-export interface Circle {
+export interface PolkadotCircle {
   cx: number;
   cy: number;
   fill: string;
   r: number;
-}
-
-export interface Options {
-  isAlternative?: boolean;
-  size?: number;
 }
