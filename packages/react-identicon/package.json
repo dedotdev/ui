@@ -25,5 +25,9 @@
   "engines": {
     "node": ">=18"
   },
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
   "license": "MIT"
 }
