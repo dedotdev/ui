@@ -1,3 +1,10 @@
+// Copyright 2018-2025 @polkadot/ui-shared authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+// Copyright 2018 Paritytech via paritytech/oo7/polkadot-identicon
+// https://github.com/polkadot-js/ui/blob/master/packages/ui-shared/src/icons/polkadot.ts
+// https://github.com/paritytech/oo7/blob/251ba2b7c45503b68eab4320c270b5afa9bccb60/packages/polkadot-identicon/src/index.jsx
+
 import type { PolkadotCircle } from '../types.js';
 
 import { blake2AsU8a, decodeAddress } from '@dedot/utils';

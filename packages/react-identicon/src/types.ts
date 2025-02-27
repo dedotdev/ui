@@ -20,7 +20,7 @@ export interface IdentityProps extends BaseProps {
   value?: string | Uint8Array | null;
 }
 
-export type IconTheme = 'polkadot' | 'substrate';
+export type IconTheme = 'polkadot' | 'jdenticon';
 
 export interface PolkadotCircle {
   cx: number;

@@ -14,7 +14,7 @@ interface State {
 const DEFAULT_SIZE: number = 64;
 const Components: Record<IconTheme, React.ComponentType<IconProps>> = {
   polkadot: Polkadot,
-  substrate: Jdenticon,
+  jdenticon: Jdenticon,
 };
 
 type IBaseIcon<P> = React.FunctionComponent<P>;
@@ -59,15 +59,15 @@ const InnerIcon: IInnerIcon<IdentityProps & State> = ({
   publicKey,
   theme = 'polkadot',
   Custom,
-  size,
+  size = DEFAULT_SIZE,
   className = '',
   style = {},
 }) => {
-  const Component = !address ? Empty : Custom || Components[theme] || Fallback;
+  const Icon = !address ? Empty : Custom || Components[theme] || Fallback;
 
   return (
-    <div className={`ui--IdentityIcon  ${className}`} key={address} style={{ ...defaultIconStyle, ...style }}>
-      <Component address={address} publicKey={publicKey} size={size || DEFAULT_SIZE} />
+    <div className={`ui--Identicon  ${className}`} key={address} style={{ ...defaultIconStyle, ...style }}>
+      <Icon address={address} publicKey={publicKey} size={size} />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import './App.css';
 import { Identicon, IconTheme } from '@dedot/react-identicon';
 
 export function App() {
-  const themes: IconTheme[] = ['polkadot', 'substrate'];
+  const themes: IconTheme[] = ['polkadot', 'jdenticon'];
 
   return (
     <>
@@ -35,7 +35,12 @@ export function App() {
           />
           <Identicon
             style={{ marginRight: 8 }}
-            size={60}
+            size={56}
+            theme={theme}
+            value='5GqrnLA7eCp163Rj3XF1JR1CD636hfXwZmYoQkgDm1M1HpBA'
+          />
+          <Identicon
+            style={{ marginRight: 8 }}
             theme={theme}
             value='5GqrnLA7eCp163Rj3XF1JR1CD636hfXwZmYoQkgDm1M1HpBA'
           />
